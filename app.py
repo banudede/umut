@@ -10,11 +10,8 @@ if 'final_basildi' not in st.session_state:
 if 'sihirli_dokunus_yapildi' not in st.session_state:
     st.session_state.sihirli_dokunus_yapildi = False
 
-# FİNAL EKRANI (Eğer final butonuna basıldıysa bu kısım çalışır)
+# FİNAL EKRANI
 if st.session_state.final_basildi:
-    st.balloons() # Finalde balon efekti
-    
-    # Cümleler tek tek geliyor
     st.markdown("### ✨ Her nefes, evrenden sana yansıyan bir mucizedir.")
     time.sleep(1.5)
     st.markdown("### ✨ İçindeki sessizlikte, ruhunun gerçek gücünü bul.")
@@ -25,9 +22,8 @@ if st.session_state.final_basildi:
     time.sleep(1.5)
     st.markdown("---")
     
-    # En son yazı ve sadece burada balonlar
     st.title("BANU'DAN SANA KÜÇÜK BİR ANI :) 💃🏻 ")
-    st.balloons()
+    st.balloons() # Balonlar sadece en sonda patlıyor
 
 # ANA EKRAN
 else:
@@ -38,9 +34,7 @@ else:
     seçim = st.selectbox("Bugün ruh halin nasıl?", 
                          ("Harika hissediyorum!", "Biraz yorgunum...", "Enerjiye ihtiyacım var!"))
 
-
-        
-        if st.button("Sihirli Dokunuşu Başlat"):
+    if st.button("Sihirli Dokunuşu Başlat"):
         # İlerleme çubuğu
         progress_bar = st.progress(0)
         for i in range(100):
@@ -48,12 +42,15 @@ else:
             progress_bar.progress(i + 1)
         
         if seçim == "Harika hissediyorum!":
-             st.success("Süpersin! Enerjin dünyayı aydınlatıyor! Yaşasın Umut Neşesiiiiiiii 😁 🎉 ✨")
+            st.success("Süpersin! Enerjin dünyayı aydınlatıyor! Yaşasın Umut Neşesiiiiiiii 😁 🎉 ✨")
         elif seçim == "Biraz yorgunum...":
             st.warning("Bazen durgunlaşmak normaldir. Dinlenmek iyidir. Keyifli günlerin değerini artırır✨☀️ ☕")
         else:
             st.success("Hemen enerji yüklüyoruz... Yükleniyor... %100! ⚡")
             st.info("Sen harika bir insansın, Umut! Asla unutma!")
+        
+        st.session_state.sihirli_dokunus_yapildi = True
+        st.rerun()
 
     # Final butonu sadece sihirli dokunuş yapıldıktan sonra görünür
     if st.session_state.sihirli_dokunus_yapildi:
