@@ -20,11 +20,11 @@ if not st.session_state.final_goster:
         col1, col2, col3 = st.columns(3)
         with col1:
             if st.button("Çok iyi hissediyorum"):
-                st.success("Yihuuuuu! İşte bu! Yaşasın Umut neşesiiiiiiiiiii")
+                st.success("Yihuuuuu!💃🏻 İşte bu!😍 Yaşasın Umut neşesiiiiiiiiiii🕺🏻😂")
                 st.session_state.adımlar["1"] = True
         with col2:
             if st.button("Biraz yorgunum"):
-                st.info("Hemen kendine bir kahve yap, en sevdiğin dizi/film aç ve dinlenmenin tadını çıkar")
+                st.info("Hemen kendine bir kahve yap☕️, en sevdiğin dizi/film aç ve dinlenmenin tadını çıkar😴🌙")
                 st.session_state.adımlar["2"] = True
         with col3:
             if st.button("Modum düşük"):
@@ -33,7 +33,7 @@ if not st.session_state.final_goster:
                 for i in range(100):
                     time.sleep(0.02)
                     bar.progress(i + 1)
-                st.success("Enerji yüklendi!")
+                st.success("Enerji yüklendi ⚡️ ☀️!")
                 st.session_state.adımlar["3"] = True
 
     # Tüm butonlara basıldı mı kontrolü
