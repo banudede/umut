@@ -7,10 +7,10 @@ st.set_page_config(page_title="Umut İçin", page_icon="🕺🏻")
 # Session state kontrolü
 if 'final_basildi' not in st.session_state:
     st.session_state.final_basildi = False
-if 'sihirli_dokunus_yapildi' not in st.session_state:
-    st.session_state.sihirli_dokunus_yapildi = False
+if 'sihirli_dokunus_tamamlandi' not in st.session_state:
+    st.session_state.sihirli_dokunus_tamamlandi = False
 
-# FİNAL EKRANI
+# 1. FİNAL EKRANI (Butona basılınca tetiklenir)
 if st.session_state.final_basildi:
     st.markdown("### ✨ Her nefes, evrenden sana yansıyan bir mucizedir.")
     time.sleep(1.5)
@@ -18,14 +18,14 @@ if st.session_state.final_basildi:
     time.sleep(1.5)
     st.markdown("### ✨ Yolun ışıkla dolsun, kalbin hep huzur bulsun bebişkosuuu :) ")
     time.sleep(1.5)
-    st.markdown("###  Dipnot: Bugün çok duygusalım 🥹 😂 ")
+    st.markdown("### Dipnot: Bugün çok duygusalım 🥹 😂 ")
     time.sleep(1.5)
     st.markdown("---")
     
     st.title("BANU'DAN SANA KÜÇÜK BİR ANI :) 💃🏻 ")
-    st.balloons() # Balonlar sadece en sonda patlıyor
+    st.balloons() # Balonlar en sonda, final mesajıyla birlikte!
 
-# ANA EKRAN
+# 2. ANA EKRAN
 else:
     st.title("Umut İçin Küçük Bir Güzellik ✨ ")
     st.subheader("Umut'un Motivasyon İstasyonu 😍")
@@ -34,6 +34,7 @@ else:
     seçim = st.selectbox("Bugün ruh halin nasıl?", 
                          ("Harika hissediyorum!", "Biraz yorgunum...", "Enerjiye ihtiyacım var!"))
 
+    # Sihirli Dokunuş Butonu
     if st.button("Sihirli Dokunuşu Başlat"):
         # İlerleme çubuğu
         progress_bar = st.progress(0)
@@ -41,6 +42,7 @@ else:
             time.sleep(0.01)
             progress_bar.progress(i + 1)
         
+        # Sonuç mesajları
         if seçim == "Harika hissediyorum!":
             st.success("Süpersin! Enerjin dünyayı aydınlatıyor! Yaşasın Umut Neşesiiiiiiii 😁 🎉 ✨")
         elif seçim == "Biraz yorgunum...":
@@ -49,12 +51,14 @@ else:
             st.success("Hemen enerji yüklüyoruz... Yükleniyor... %100! ⚡")
             st.info("Sen harika bir insansın, Umut! Asla unutma!")
         
-        st.session_state.sihirli_dokunus_yapildi = True
+        # Sihirli dokunuş artık tamamlandı
+        st.session_state.sihirli_dokunus_tamamlandi = True
         st.rerun()
 
-    # Final butonu sadece sihirli dokunuş yapıldıktan sonra görünür
-    if st.session_state.sihirli_dokunus_yapildi:
+    # Final butonu SADECE işlem bitince görünür
+    if st.session_state.sihirli_dokunus_tamamlandi:
         st.markdown("---")
+        st.write("Her şey hazır! ✨")
         if st.button("Final"):
             st.session_state.final_basildi = True
             st.rerun()
