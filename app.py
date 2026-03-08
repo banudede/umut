@@ -2,63 +2,66 @@ import streamlit as st
 import time
 
 # Sayfa ayarları
-st.set_page_config(page_title="Umut İçin", page_icon="🕺🏻")
+st.set_page_config(page_title="Umut'a Özel", page_icon="✨")
 
-# Session state kontrolü
-if 'final_basildi' not in st.session_state:
-    st.session_state.final_basildi = False
-if 'sihirli_dokunus_tamamlandi' not in st.session_state:
-    st.session_state.sihirli_dokunus_tamamlandi = False
+# Oturum durumlarını takip edelim
+if 'adımlar' not in st.session_state:
+    st.session_state.adımlar = {"1": False, "2": False, "3": False}
+if 'final_goster' not in st.session_state:
+    st.session_state.final_goster = False
 
-# 1. FİNAL EKRANI (Butona basılınca tetiklenir)
-if st.session_state.final_basildi:
-    st.markdown("### ✨ Her nefes, evrenden sana yansıyan bir mucizedir.")
-    time.sleep(1.5)
-    st.markdown("### ✨ İçindeki sessizlikte, ruhunun gerçek gücünü bul.")
-    time.sleep(1.5)
-    st.markdown("### ✨ Yolun ışıkla dolsun, kalbin hep huzur bulsun bebişkosuuu :) ")
-    time.sleep(1.5)
-    st.markdown("### Dipnot: Bugün çok duygusalım 🥹 😂 ")
-    time.sleep(1.5)
-    st.markdown("---")
-    
-    st.title("BANU'DAN SANA KÜÇÜK BİR ANI :) 💃🏻 ")
-    st.balloons() # Balonlar en sonda, final mesajıyla birlikte!
+# Giriş Başlığı
+if not st.session_state.final_goster:
+    st.title("Umut'a özel küçük bir güzellik ✨")
+    st.write("Bugün kendini nasıl hissediyorsun?")
 
-# 2. ANA EKRAN
-else:
-    st.title("Umut İçin Küçük Bir Güzellik ✨ ")
-    st.subheader("Umut'un Motivasyon İstasyonu 😍")
-    st.markdown("---")
+    # Butonlar
+    col1, col2, col3 = st.columns(3)
 
-    seçim = st.selectbox("Bugün ruh halin nasıl?", 
-                         ("Harika hissediyorum!", "Biraz yorgunum...", "Enerjiye ihtiyacım var!"))
+    with col1:
+        if st.button("Çok iyi hissediyorum"):
+            st.success("Yihuuuuu 💃🏻! İşte bu! Yaşasın Umut neşesiiiiiiiiiii🕺🏻 🥳 😄 ")
+            st.session_state.adımlar["1"] = True
 
-    # Sihirli Dokunuş Butonu
-    if st.button("Sihirli Dokunuşu Başlat"):
-        # İlerleme çubuğu
-        progress_bar = st.progress(0)
-        for i in range(100):
-            time.sleep(0.01)
-            progress_bar.progress(i + 1)
-        
-        # Sonuç mesajları
-        if seçim == "Harika hissediyorum!":
-            st.success("Süpersin! Enerjin dünyayı aydınlatıyor! Yaşasın Umut Neşesiiiiiiii 😁 🎉 ✨")
-        elif seçim == "Biraz yorgunum...":
-            st.warning("Bazen durgunlaşmak normaldir. Dinlenmek iyidir. Keyifli günlerin değerini artırır✨☀️ ☕")
-        else:
-            st.success("Hemen enerji yüklüyoruz... Yükleniyor... %100! ⚡")
-            st.info("Sen harika bir insansın, Umut! Asla unutma!")
-        
-        # Sihirli dokunuş artık tamamlandı
-        st.session_state.sihirli_dokunus_tamamlandi = True
-        st.rerun()
+    with col2:
+        if st.button("Biraz yorgunum"):
+            st.info("Hemen kendine bir kahve yap ☕️, en sevdiğin dizi/filmi aç ve dinlenmenin tadını çıkar 😴 🌙 ")
+            st.session_state.adımlar["2"] = True
 
-    # Final butonu SADECE işlem bitince görünür
-    if st.session_state.sihirli_dokunus_tamamlandi:
-        st.markdown("---")
-        st.write("Her şey hazır! ✨")
-        if st.button("Final"):
-            st.session_state.final_basildi = True
+    with col3:
+        if st.button("Modum düşük"):
+            st.warning("Ne demek modum düşük ? Hemen enerji yüklemesi yapıyoruz...")
+            bar = st.progress(0)
+            for i in range(100):
+                time.sleep(0.02)
+                bar.progress(i + 1)
+            st.success("Enerji yüklendi!")
+            st.session_state.adımlar["3"] = True
+
+    # Tüm butonlara basıldı mı kontrolü
+    if all(st.session_state.adımlar.values()):
+        st.divider()
+        if st.button("Finali Görmek İçin Tıkla 🎁"):
+            st.session_state.final_goster = True
             st.rerun()
+
+# Final ekranı
+if st.session_state.final_goster:
+    # Sayfadaki her şeyi temizle
+    st.empty() 
+    
+    # Sadece mesajı göster
+    st.balloons()
+    st.subheader("BANU'DAN SANA KÜÇÜK BİR ANI :)")
+    
+    yazi = [
+        "Seninle vakit geçirmek her zaman modumu yükseltiyor,",
+        "dünyadaki en kafa dengi insanlardan birisin.",
+        "Hayatın akışında senin gibi pozitif birinin olması büyük şans.",
+        "Her şey gönlünce olsun, keyfin hep böyle yerinde kalsın!"
+    ]
+    
+    # Cümleleri sırayla yazdırma
+    for cumle in yazi:
+        st.write(f"### {cumle}")
+        time.sleep(1.2)
