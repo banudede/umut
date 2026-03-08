@@ -42,7 +42,7 @@ with placeholder.container():
 
     # 2. Keşif: Özel Not
     with st.expander("💌 Buraya bir tıkla, sürprizim var!"):
-        st.write("Hayat bazen yorucu olabilir ama senin içindeki o güzel enerji her şeyi güzelleştirmeye yeter. İyi ki varsın Umut! 💖")
+        st.write("Hayat bazen yorucu olabilir ama senin içindeki o güzel enerji her şeyi güzelleştirmeye yeter. İyi ki varsın Umut! 🎈")
         if st.button("Notu okudum"):
             st.session_state.adim2 = True
             st.success("Notum kaydedildi! ✅")
@@ -50,7 +50,7 @@ with placeholder.container():
     # 3. Keşif: Motivasyon Sözü
     if st.button("Bana bir ilham ver!"):
         st.session_state.adim3 = True
-        st.success("Bugün her şey senin için çok güzel olacak! 🚀")
+        st.success(" Her şey çok güzel, daha da güzel olacak! 🧘🏻💫")
 
     st.markdown("---")
     
