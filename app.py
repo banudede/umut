@@ -1,12 +1,13 @@
+import streamlit as st
 import time
 
-# Sayfa ayarları
+# Sayfa ayarları HER ZAMAN EN ÜSTTE OLMALI
 st.set_page_config(page_title="Umut İçin", page_icon="❤️")
 
 # Sayfayı temizleyebilmek için ana konteyner
 placeholder = st.empty()
 
-# Adımları takip etmek için (3 keşif alanı için 3 bayrak)
+# Etkileşim durumlarını takip etmek için
 if 'adim1' not in st.session_state: st.session_state.adim1 = False
 if 'adim2' not in st.session_state: st.session_state.adim2 = False
 if 'adim3' not in st.session_state: st.session_state.adim3 = False
@@ -16,7 +17,7 @@ with placeholder.container():
     st.subheader("Umut'un Motivasyon İstasyonu 😍")
     st.markdown("---")
 
-    # 1. Keşif: Neşe Makinesi
+    # 1. Etkileşim
     seçim = st.selectbox("Bugün ruh halin nasıl?", 
                          ("Harika hissediyorum!", "Biraz yorgunum...", "Enerjiye ihtiyacım var!"))
     
@@ -36,39 +37,34 @@ with placeholder.container():
         else:
             st.balloons()
             st.success("Hemen enerji yüklüyoruz... %100! ⚡")
-            st.info("Sen harika bir insansın, Umut! Asla unutma!")
+            st.info("Sen harika bir insansın Umut! Asla unutma!😇 ")
 
     st.markdown("---")
 
-    # 2. Keşif: Özel Not
+    # 2. Etkileşim
     with st.expander("💌 Buraya bir tıkla, sürprizim var!"):
-        st.write("Hayat bazen yorucu olabilir ama senin içindeki o güzel enerji her şeyi güzelleştirmeye yeter. İyi ki varsın Umut! 🎈")
+        st.write("Hayat bazen yorucu olabilir ama senin içindeki o güzel enerji her şeyi güzelleştirmeye yeter. İyi ki varsın Umut! 💖")
         if st.button("Notu okudum"):
             st.session_state.adim2 = True
             st.success("Notum kaydedildi! ✅")
 
-    # 3. Keşif: Motivasyon Sözü
-    if st.button("Bana bir ilham ver!"):
-        st.session_state.adim3 = True
-        st.success(" Her şey çok güzel, daha da güzel olacak! 🧘🏻💫")
+    
 
     st.markdown("---")
     
-    # FİNAL BUTONU (Sadece 3 adım da tamamlandıysa görünür)
+    # FİNAL BUTONU
     if st.session_state.adim1 and st.session_state.adim2 and st.session_state.adim3:
         st.warning("Tüm keşifler bitti! Artık Final'e basabilirsin. ✨")
         if st.button("Final"):
-            placeholder.empty() # Her şeyi sil
-            
-            # Final sahnesi
+            placeholder.empty() 
             st.snow()
             st.markdown("### ✨ Her nefes, evrenden sana yansıyan bir mucize.")
             time.sleep(1.5)
             st.markdown("### ✨ İçindeki sessizlikte, ruhunun gerçek gücünü bul.")
             time.sleep(1.5)
-            st.markdown("### ✨ Yolun ışıkla dolsun, kalbin hep huzur bulsun bebişkosuuuu.")
+            st.markdown("### ✨ Yolun ışıkla dolsun, kalbin hep huzur bulsun bebişkosuuuu 🎉 💫 ☀️.")
             time.sleep(1.5)
-            st.markdown("###  Dipnot: Bugün çok duygusalım 🥹😂 ")
+            st.markdown("###  Dipnot: Bugün çok duygusalım 🥹 😂")
             time.sleep(1.5)
             st.markdown("---")
             st.title("BANU'DAN SANA KÜÇÜK BİR ANI :) 💃🏻 ")
