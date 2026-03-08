@@ -1,28 +1,26 @@
 import streamlit as st
 import time
 
-# Sayfa ayarları HER ZAMAN EN ÜSTTE OLMALI
+# Sayfa ayarları en tepede
 st.set_page_config(page_title="Umut İçin", page_icon="❤️")
 
 # Sayfayı temizleyebilmek için ana konteyner
 placeholder = st.empty()
 
-# Etkileşim durumlarını takip etmek için
-if 'adim1' not in st.session_state: st.session_state.adim1 = False
-if 'adim2' not in st.session_state: st.session_state.adim2 = False
-if 'adim3' not in st.session_state: st.session_state.adim3 = False
+# Durum takibi
+if 'sihirli_dokunus_bitti' not in st.session_state:
+    st.session_state.sihirli_dokunus_bitti = False
 
 with placeholder.container():
     st.title("Umut İçin Küçük Bir Güzellik 🥳")
     st.subheader("Umut'un Motivasyon İstasyonu 😍")
     st.markdown("---")
 
-    # 1. Etkileşim
     seçim = st.selectbox("Bugün ruh halin nasıl?", 
                          ("Harika hissediyorum!", "Biraz yorgunum...", "Enerjiye ihtiyacım var!"))
-    
+
     if st.button("Sihirli Dokunuşu Başlat"):
-        st.session_state.adim1 = True
+        # İlerleme çubuğu
         progress_bar = st.progress(0)
         for i in range(100):
             time.sleep(0.01)
@@ -36,33 +34,24 @@ with placeholder.container():
             st.warning("Bazen durgunlaşmak normaldir. Dinlenmek iyidir. Keyifli günlerin değerini artırır✨☀️ ☕")
         else:
             st.balloons()
-            st.success("Hemen enerji yüklüyoruz... %100! ⚡")
-            st.info("Sen harika bir insansın Umut! Asla unutma!😇 ")
+            st.success("Hemen enerji yüklüyoruz... Yükleniyor... %100! ⚡")
+            st.info("Sen harika bir insansın, Umut! Asla unutma!")
+        
+        st.session_state.sihirli_dokunus_bitti = True
 
-    st.markdown("---")
-
-    # 2. Etkileşim
-    with st.expander("💌 Buraya bir tıkla, sürprizim var!"):
-        st.write("Hayat bazen yorucu olabilir ama senin içindeki o güzel enerji her şeyi güzelleştirmeye yeter. İyi ki varsın Umut! 💖")
-        if st.button("Notu okudum"):
-            st.session_state.adim2 = True
-            st.success("Notum kaydedildi! ✅")
-
-    
-
-    st.markdown("---")
-    
-    # FİNAL BUTONU
-    if st.session_state.adim1 and st.session_state.adim2 and st.session_state.adim3:
-        st.warning("Tüm keşifler bitti! Artık Final'e basabilirsin. ✨")
+    # Sadece sihirli dokunuş yapıldıysa Final butonu görünür
+    if st.session_state.sihirli_dokunus_bitti:
+        st.markdown("---")
         if st.button("Final"):
-            placeholder.empty() 
+            placeholder.empty() # Tüm sayfayı siliyoruz
+            
+            # Final sahnesi
             st.snow()
             st.markdown("### ✨ Her nefes, evrenden sana yansıyan bir mucize.")
             time.sleep(1.5)
             st.markdown("### ✨ İçindeki sessizlikte, ruhunun gerçek gücünü bul.")
             time.sleep(1.5)
-            st.markdown("### ✨ Yolun ışıkla dolsun, kalbin hep huzur bulsun bebişkosuuuu 🎉 💫 ☀️.")
+            st.markdown("### ✨ Yolun ışıkla dolsun, kalbin hep huzur bulsun bebişkosuuuu.")
             time.sleep(1.5)
             st.markdown("###  Dipnot: Bugün çok duygusalım 🥹 😂")
             time.sleep(1.5)
