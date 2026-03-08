@@ -64,4 +64,4 @@ if st.session_state.final_goster:
     # Cümleleri sırayla yazdırma
     for cumle in yazi:
         st.write(f"### {cumle}")
-        time.sleep(1.2)
+        time.sleep(2.5)
