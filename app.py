@@ -2,72 +2,46 @@ import streamlit as st
 import time
 
 # Sayfa ayarları
-st.set_page_config(page_title="Umut'a Özel", page_icon="✨")
+st.set_page_config(page_title="Uyum Envanteri", page_icon="📊")
 
-# Oturum durumlarını takip edelim
-if 'adımlar' not in st.session_state:
-    st.session_state.adımlar = {"1": False, "2": False, "3": False}
-if 'final_goster' not in st.session_state:
-    st.session_state.final_goster = False
+# Uygulama akışı için session state
+if 'stage' not in st.session_state:
+    st.session_state.stage = 'anket'
 
-# Giriş ekranı (final gösterilmiyorsa)
-if not st.session_state.final_goster:
-    container = st.container()
-    with container:
-        st.title("Umut'a özel küçük bir güzellik ✨")
-        st.write("Bugün kendini nasıl hissediyorsun?")
+if st.session_state.stage == 'anket':
+    st.title("📊 Yiğit İle Banu'nun Uyum Envanteri")
+    st.write("Merhaba Yiğit! Bu çalışma, Banu'nun eğitim projesi kapsamında geliştirilmiştir. Lütfen tüm soruları objektif ve içtenlikle yanıtlayınız.")
+    
+    with st.form("uyum_formu"):
+        # Sorular (Daha önce konuştuğumuz 10 soru)
+        q1 = st.slider("1. İnsan ilişkilerinde 'güven' faktörünü 1'den 10'a kadar puanlayın:", 1, 10, 5)
+        q2 = st.radio("2. Bir arkadaşlıkta en çok neye önem verirsiniz?", ["Dürüstlük", "Ortak hobiler", "İletişim sıklığı"])
+        q3 = st.radio("3. Sosyal ortamlarda genellikle gözlemci mi yoksa yönlendirici mi olmayı tercih edersin?", ["Gözlemci", "Yönlendirici", "Ortama göre dengeleyici"])
+        q4 = st.radio("4. Banu ile ortak bir karar almanız gerekse, genelde kimin fikri daha baskın olur?", ["Genelde benim fikirlerim", "Genelde Banu'nun fikirleri", "Ortak bir noktada buluşuruz"])
+        q5 = st.radio("5. Genel olarak arkadaşlıklarında 'sakinleştirici' bir güç müsün, yoksa 'hareketlendirici' mi?", ["Sakinleştirici", "Hareketlendirici", "Duruma göre değişir"])
+        q6 = st.radio("6. Planlı hareket etmeyi mi seversin, yoksa akışına bırakmayı mı?", ["Planlı", "Akışına bırakırım"])
+        q7 = st.radio("7. Küçük bir anlaşmazlıkta ilk adımı atmayı mı tercih edersin, yoksa karşı tarafın gelmesini mi?", ["İlk adımı atarım", "Karşı taraf gelsin"])
+        q8 = st.radio("8. Banu ile ortak bir ilgi alanınız olsaydı bu ne olurdu?", ["Teknoloji", "Eğlence", "Sosyal Projeler"])
+        q9 = st.radio("9. Banu ile vakit geçirirken sence hangimiz daha çok eğleniyoruz?", ["Ben onu eğlendiriyorum", "O beni daha çok eğlendiriyor", "İkimiz de birbirimizi tamamlıyoruz"])
+        q10 = st.radio("10. Sence bu testin sonunda aramızdaki 'uyum' ne çıkacak?", ["Oldukça yüksek bir skor", "Gözlem aşamasında olduğumuz bir sonuç", "Henüz keşfedilmemiş bir potansiyel"])
+        
+        submitted = st.form_submit_button("Analizi Gör")
 
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            if st.button("Çok iyi hissediyorum"):
-                st.success("Yihuuuuu!💃🏻 İşte bu!😍 Yaşasın Umut neşesiiiiiiiiiii🕺🏻😂")
-                st.session_state.adımlar["1"] = True
-        with col2:
-            if st.button("Biraz yorgunum"):
-                st.info("Hemen kendine bir kahve yap☕️, en sevdiğin dizi/film aç ve dinlenmenin tadını çıkar😴🌙")
-                st.session_state.adımlar["2"] = True
-        with col3:
-            if st.button("Modum düşük"):
-                st.warning("Ne demek modum düşük ? Hemen enerji yüklemesi yapıyoruz...")
-                bar = st.progress(0)
-                for i in range(100):
-                    time.sleep(0.02)
-                    bar.progress(i + 1)
-                st.success("Enerji yüklendi ⚡️ ☀️!")
-                st.session_state.adımlar["3"] = True
+    if submitted:
+        st.session_state.stage = 'loading'
+        st.rerun()
 
-    # Tüm butonlara basıldı mı kontrolü
-    if all(st.session_state.adımlar.values()):
-        st.divider()
-        if st.button("Finali Görmek İçin Tıkla 🎁"):
-            st.session_state.final_goster = True
-            st.rerun()
+elif st.session_state.stage == 'loading':
+    # Yavaş yükleme illüzyonu
+    with st.spinner('Analiz verileri işleniyor, lütfen bekleyiniz...'):
+        time.sleep(4) # Yiğit bu 4 saniyede iyice sabırsızlanacak
+    st.session_state.stage = 'final'
+    st.rerun()
 
-# Final ekranı
-else:
-    # Sayfadaki her şeyi temizle
-    st.empty() 
+elif st.session_state.stage == 'final':
+    # Görselin basılması
+    st.image("intikam.png", use_container_width=True)
     
-    # Yazıyı göstermek için bir alan oluştur
-    yazi_alani = st.empty()
-    
-    yazi = [
-        "Seninle vakit geçirmek her zaman modumu yükseltiyor,",
-        "dünyadaki en kafa dengi insanlardan birisin.",
-        "Hayatın akışında senin gibi pozitif birinin olması büyük şans.",
-        "Her şey gönlünce olsun, keyfin hep böyle yerinde kalsın!"
-    ]
-    
-    # Cümleleri sırayla ekranda biriktirerek yazdır
-    gorunen_yazi = ""
-    for cumle in yazi:
-        gorunen_yazi += f"### {cumle}\n\n"
-        yazi_alani.markdown(gorunen_yazi)
-        time.sleep(2.5)
-    
-    # Yazı bitince ekranı temizle
-    yazi_alani.empty()
-    
-    # Balonları patlat ve final mesajını göster
-    st.balloons()
-    st.title("BANU'DAN SANA KÜÇÜK BİR ANI :)")
+    # Yazının gecikmeli belirmesi (opsiyonel ama daha etkileyici)
+    time.sleep(1)
+    st.markdown("<h1 style='text-align: center; color: #FF4B4B;'>HEE ÇOK BEKLERSİN! AL SANA ANALİZ!</h1>", unsafe_allow_html=True)
